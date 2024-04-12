@@ -182,8 +182,11 @@ int main(int argc, char *argv[]) {
     int ret;
 	const char *model_path = "./model/retinaface.rknn";
     memset(&rknn_app_ctx, 0, sizeof(rknn_app_context_t));	
-    init_retinaface_model(model_path, &rknn_app_ctx);
-	printf("init rknn model success!\n");
+    if(init_retinaface_model(model_path, &rknn_app_ctx) != RK_SUCCESS)
+	{
+		RK_LOGE("rknn model init fail!");
+		return -1;
+	}
 
 	// rkaiq init 
 	RK_BOOL multi_sensor = RK_FALSE;	
