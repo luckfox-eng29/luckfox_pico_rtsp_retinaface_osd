@@ -14,8 +14,6 @@ set(CMAKE_CXX_COMPILER "${SDK_PATH}/tools/linux/toolchain/arm-rockchip830-linux-
 
 project(luckfox_rtsp_retinaface_osd)
 
-
-
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/lib)
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/ 3rdparty.out)

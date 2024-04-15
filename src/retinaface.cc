@@ -166,27 +166,6 @@ int init_retinaface_model(const char *model_path, rknn_app_context_t *app_ctx)
 int release_retinaface_model(rknn_app_context_t *app_ctx)
 {
     
-    if (app_ctx->rknn_ctx != 0)
-    {
-        rknn_destroy(app_ctx->rknn_ctx);
-        app_ctx->rknn_ctx = 0;
-    }
-    
-    if (app_ctx->net_mem != NULL)
-    {
-        printf("destory mem\n");
-        rknn_destroy_mem(app_ctx->rknn_ctx, app_ctx->net_mem);
-        free(app_ctx->net_mem);
-    }
-    
-    if (app_ctx->max_mem != NULL)
-    {
-        printf("destory mem\n");
-        rknn_destroy_mem(app_ctx->rknn_ctx, app_ctx->max_mem);
-        free(app_ctx->max_mem);
-    }
-    
-    
     if (app_ctx->input_attrs != NULL)
     {
         free(app_ctx->input_attrs);
@@ -200,15 +179,18 @@ int release_retinaface_model(rknn_app_context_t *app_ctx)
     for (int i = 0; i < app_ctx->io_num.n_input; i++) {
         if (app_ctx->input_mems[i] != NULL) {
             rknn_destroy_mem(app_ctx->rknn_ctx, app_ctx->input_mems[i]);
-            free(app_ctx->input_mems[i]);
         }
     }
     for (int i = 0; i < app_ctx->io_num.n_output; i++) {
         if (app_ctx->output_mems[i] != NULL) {
             rknn_destroy_mem(app_ctx->rknn_ctx, app_ctx->output_mems[i]);
-            free(app_ctx->output_mems[i]);
         }
     }
+    if (app_ctx->rknn_ctx != 0)
+    {
+        rknn_destroy(app_ctx->rknn_ctx);
+        app_ctx->rknn_ctx = 0;
+    } 
     return 0;
 }
 
